@@ -1,0 +1,16 @@
+body {
+  margin: 0px;
+  overflow: hidden;
+}
+
+#info {
+  position: fixed;
+  padding: 5px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid black;
+}
+
+#info_rules {
+  margin: 5px;
+}
