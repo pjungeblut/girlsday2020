@@ -1,6 +1,9 @@
+// In dieser Datei ist der Quelltext, um die Zeichenflaeche zu verwalten.
+//
+// In dieser Datei muessen wir nichts veraendern.
+
 class Canvas {
-  // When drawing keep this amount of pixels as a margin.
-  MARGIN = 50;
+  MARGIN = 20;
 
   constructor(id, shape_type, wall) {
     this.wall = wall;
@@ -42,7 +45,7 @@ class Canvas {
       for (let j = 0; j + i < this.wall.size; ++j) {
         let x = x_offset + j * dim ;
         let y = this.MARGIN + i * dim * this.shape.HW_RATIO;
-        this.shape.draw(x, y, dim, this.wall.get_color(i, j));
+        this.shape.draw(x, y, dim, this.wall.colors[this.wall.get_color(i, j)]);
       }
 
       x_offset += dim / 2;

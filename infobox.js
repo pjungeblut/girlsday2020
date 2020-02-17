@@ -1,9 +1,13 @@
+// Diese Datei verwaltet die kleine Infobox in der rechten unteren Ecke.
+//
+// In dieser Datein muessen wir nichts veraendern.
+
 class InfoBox {
   RADIUS = 10;
 
-  constructor(info_n_id, info_rules_id, size, colors, rules) {
+  constructor(info_n_id, info_rules_id, size, colors, compute_color) {
     this.display_size(info_n_id, size);
-    this.display_rules(info_rules_id, colors, rules);
+    this.display_rules(info_rules_id, colors, compute_color);
   }
 
   display_size(info_n_id, size) {
@@ -11,7 +15,7 @@ class InfoBox {
     info_n.innerHTML = size;
   }
 
-  display_rules(info_rules_id, colors, rules) {
+  display_rules(info_rules_id, colors, compute_color) {
     // Berechnet die Groesse der Regeltabelle.
     const canvas = document.getElementById(info_rules_id);
     const dimensions = (colors.length + 1) * this.RADIUS * 2 + colors.length;
@@ -53,7 +57,7 @@ class InfoBox {
       for (let j = 0; j < colors.length; ++j) {
         const offset_x = (j + 1) * this.RADIUS * 2 + (j + 1) + this.RADIUS;
         const offset_y = (i + 1) * this.RADIUS * 2 + (i + 1) + this.RADIUS;
-        ctx.fillStyle = rules[colors[i]][colors[j]];
+        ctx.fillStyle = colors[compute_color(i, j)];
         ctx.strokeStyle = "black";
         ctx.beginPath();
         ctx.arc(offset_x, offset_y, this.RADIUS - 2, 0, 2 * Math.PI);
