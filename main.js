@@ -15,7 +15,7 @@
 // Um auf die i-te Farbe in der Liste zuzugreifen, schreiben wir: colors[i]
 // Achtung: Wir fangen immer bei 0 an zu zaehlen, colors[0] ist also die erste
 // Farbe in der Liste, colors[1] die zweite, ...
-const colors = ["white", "black"];
+const colors = ["darkseagreen", "darkslateblue", "lightcoral"];
 
 // Berechnet die Farbe eines Feldes aus den Farben der beiden oberen Felder.
 // Die Eingabe sind die Positionen der beiden Farben darueber in der Farbliste
@@ -23,8 +23,9 @@ const colors = ["white", "black"];
 // Das Ergbenis ist die Position der neuen Farbe in der Farbliste 'colors'.
 function compute_color(left, right) {
   const rules = [
-    [0, 1],
-    [1, 0]
+    [0, 1, 2],
+    [1, 2, 0],
+    [2, 0, 1]
   ];
   return rules[left][right];
 }
@@ -46,8 +47,9 @@ window.addEventListener("load", () => {
   // Zeile und j-ten Spalte setzen.
   // Die Farbe wird dabei wieder nicht direkt angegeben, sonder die Position in
   // der Farbliste.
-  for (let pos = 1; pos < size; pos *= 2) {
-    wall.set_color(0, pos, 1);
+  for (let outer = 1; outer < size / 2; outer *= 2) {
+    wall.set_color(0, outer, 1);
+    wall.set_color(0, size - outer, 2);
   }
 
   // Einfaerben aller unteren Zeilen.
