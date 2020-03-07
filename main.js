@@ -15,7 +15,7 @@
 // Um auf die i-te Farbe in der Liste zuzugreifen, schreiben wir: colors[i]
 // Achtung: Wir fangen immer bei 0 an zu zaehlen, colors[0] ist also die erste
 // Farbe in der Liste, colors[1] die zweite, ...
-const colors = ["darkseagreen", "darkslateblue", "lightcoral"];
+const colors = ["white", "darkseagreen", "darkslateblue", "lightcoral"];
 
 // Berechnet die Farbe eines Feldes aus den Farben der beiden oberen Felder.
 // Die Eingabe sind die Positionen der beiden Farben darueber in der Farbliste
@@ -23,9 +23,10 @@ const colors = ["darkseagreen", "darkslateblue", "lightcoral"];
 // Das Ergbenis ist die Position der neuen Farbe in der Farbliste 'colors'.
 function compute_color(left, right) {
   const rules = [
-    [0, 1, 2],
-    [1, 2, 0],
-    [2, 0, 1]
+    [0, 0, 0, 0],
+    [0, 1, 2, 3],
+    [0, 2, 3, 1],
+    [0, 3, 1, 2]
   ];
   return rules[left][right];
 }
@@ -33,37 +34,19 @@ function compute_color(left, right) {
 window.addEventListener("load", () => {
   // 'size' speichert die Groesse des Spielfeldes, genauer die Anzahl der Felder
   // in der ersten Reihe.
-  const size = 129;
+  const size = 64;
+
+  // Die Anzahl der Millisekunden, die es dauert, um eine Farbe in ein Feld zu
+  // setzen.
+  const delay = 7;
 
   // Legt das Spielfeld an.
   // Der erste Parameter ist die Groesse der ersten Zeile, der zweite die Liste
   // von Farben und der dritte die initiale Farbe aller Felder.
   // Der dritte Parameter ist dabei nicht die Farbe selbst, sondern die Position
   // der Farbe in der Farbliste.
-  const wall = new Wall(size, colors, 0);
-
-  // Einfaerben der ersten Zeile.
-  // Mit wall.set_color(i, j, c) koennen wir die Farbe vom Stein in der i-ten
-  // Zeile und j-ten Spalte setzen.
-  // Die Farbe wird dabei wieder nicht direkt angegeben, sonder die Position in
-  // der Farbliste.
-  for (let outer = 1; outer < size / 2; outer *= 2) {
-    wall.set_color(0, outer, 1);
-    wall.set_color(0, size - outer, 2);
-  }
-
-  // Einfaerben aller unteren Zeilen.
-  // Wie oben koennen wir mit wall.set_color(...) die Farbe eines Feldes setzen.
-  // Dafuer koennen wir mit wall.get_color(i, j) die Farbe in der i-ten Zeile
-  // und j-ten Spalte abfragen. Als Ergebnis bekommen wir wieder nicht direkt
-  // die Farbe, sondern nur die Position in der Farbliste.
-  for (let i = 1; i < size; ++i) {
-    for (let j = 0; j + i < size; ++j) {
-      const left = wall.get_color(i - 1, j);
-      const right = wall.get_color(i - 1, j + 1);
-      wall.set_color(i, j, compute_color(left, right));
-    }
-  }
+  // Der vierte Parameter gibt an, wie lange ein Einfaerben benoetigt.
+  const wall = new Wall(size, colors, 0, delay);
 
   // Malt das Bild.
   // Fuer uns ist nur der zweite Parameter interessant, hier koennen wir die
@@ -76,5 +59,44 @@ window.addEventListener("load", () => {
 
   // Fuellt die Info-Box am unteren Bildrand.
   // Hier muessen wir nichts veraendern.
-  const infobox = new InfoBox("info_n", "info_rules", size, colors, compute_color);
+  const infobox = new InfoBox("info_n", "info_delay", "info_rules", size, delay,
+      colors, compute_color);
+
+  // Was passiert, wenn der "Start"-Button gedrueckt wird?
+  document.getElementById("start_button").addEventListener("click", () => {
+    // Loesche alles, was noch vom letzten Klick in Arbeit sein koennte.
+    // Hier muessen wir nichts aendern.
+    wall.queue = [];
+    wall.init();
+
+    // Einfaerben der ersten Zeile.
+    // Mit wall.set_color(i, j, c) koennen wir die Farbe vom Stein in der i-ten
+    // Zeile und j-ten Spalte setzen.
+    // Die Farbe wird dabei wieder nicht direkt angegeben, sonder die Position in
+    // der Farbliste.
+    for (let i = 0; i < size; ++i) {
+      wall.set_color(0, i, 1);
+    }
+    for (let i = 1; i < size / 2; i *= 2) {
+      wall.set_color(0, i, 2);
+      wall.set_color(0, size - i, 3);
+    }
+
+    // Einfaerben aller unteren Zeilen.
+    // Wie oben koennen wir mit wall.set_color(...) die Farbe eines Feldes setzen.
+    // Dafuer koennen wir mit wall.get_color(i, j) die Farbe in der i-ten Zeile
+    // und j-ten Spalte abfragen. Als Ergebnis bekommen wir wieder nicht direkt
+    // die Farbe, sondern nur die Position in der Farbliste.
+    for (let i = 1; i < size; ++i) {
+      for (let j = 0; j + i < size; ++j) {
+        const left = wall.get_color(i - 1, j);
+        const right = wall.get_color(i - 1, j + 1);
+        wall.set_color(i, j, compute_color(left, right));
+      }
+    }
+
+    // Als letztes den Befehl zum Malen.
+    wall.last_operation = Date.now();
+    canvas.draw();
+  });
 });

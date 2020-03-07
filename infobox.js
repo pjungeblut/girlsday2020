@@ -5,14 +5,21 @@
 class InfoBox {
   RADIUS = 10;
 
-  constructor(info_n_id, info_rules_id, size, colors, compute_color) {
+  constructor(info_n_id, info_delay_id, info_rules_id, size, delay, colors,
+        compute_color) {
     this.display_size(info_n_id, size);
+    this.display_delay(info_delay_id, delay);
     this.display_rules(info_rules_id, colors, compute_color);
   }
 
   display_size(info_n_id, size) {
     const info_n = document.getElementById(info_n_id);
     info_n.innerHTML = size;
+  }
+
+  display_delay(info_delay_id, delay) {
+    const info_delay = document.getElementById(info_delay_id);
+    info_delay.innerHTML = delay;
   }
 
   display_rules(info_rules_id, colors, compute_color) {

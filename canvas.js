@@ -18,6 +18,8 @@ class Canvas {
 
     this.resize();
     window.addEventListener("resize", this.resize.bind(this));
+
+    window.requestAnimationFrame(this.draw.bind(this));
   }
 
   resize() {
@@ -45,10 +47,16 @@ class Canvas {
       for (let j = 0; j + i < this.wall.size; ++j) {
         let x = x_offset + j * dim ;
         let y = this.MARGIN + i * dim * this.shape.HW_RATIO;
-        this.shape.draw(x, y, dim, this.wall.colors[this.wall.get_color(i, j)]);
+        this.shape.draw(x, y, dim,
+            this.wall.colors[this.wall.get_displayed_color(i, j)]);
       }
 
       x_offset += dim / 2;
+    }
+
+    if (this.wall.queue.length != 0) {
+      this.wall.work();
+      window.requestAnimationFrame(this.draw.bind(this));
     }
   }
 }
