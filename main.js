@@ -1,8 +1,8 @@
-// Diese Datei ist die einzige, in der wir Digne veraendern muessen, um neue
+// Diese Datei ist die einzige, in der wir Dinge veraendern muessen, um neue
 // Bilder zu erzeugen.
 // Alles, was wie diese Zeilen hinter zwei Schraegstrichen steht, sind sog.
-// Kommentare. Der Computer ignoriert das, aber wir als Entwickler koennen uns
-// damit Notizen in den Quelltext schreiben.
+// Kommentare. Der Computer ignoriert das, aber wir als Entwicklerinnen koennen
+// uns damit Notizen in den Quelltext schreiben.
 
 
 
@@ -23,10 +23,10 @@ const colors = ["white", "darkseagreen", "darkslateblue", "lightcoral"];
 // Das Ergbenis ist die Position der neuen Farbe in der Farbliste 'colors'.
 function compute_color(left, right) {
   const rules = [
-    [0, 0, 0, 0],
-    [0, 1, 2, 3],
-    [0, 2, 3, 1],
-    [0, 3, 1, 2]
+    [2, 0, 1, 2],
+    [1, 3, 0, 2],
+    [3, 3, 3, 0],
+    [1, 0, 1, 2]
   ];
   return rules[left][right];
 }
@@ -34,7 +34,7 @@ function compute_color(left, right) {
 window.addEventListener("load", () => {
   // 'size' speichert die Groesse des Spielfeldes, genauer die Anzahl der Felder
   // in der ersten Reihe.
-  const size = 64;
+  const size = 15;
 
   // Die Anzahl der Millisekunden, die es dauert, um eine Farbe in ein Feld zu
   // setzen.
@@ -75,12 +75,10 @@ window.addEventListener("load", () => {
     // Die Farbe wird dabei wieder nicht direkt angegeben, sonder die Position in
     // der Farbliste.
     for (let i = 0; i < size; ++i) {
-      wall.set_color(0, i, 1);
+      wall.set_color(0, i, Math.floor(Math.random() * 4));
     }
-    for (let i = 1; i < size / 2; i *= 2) {
-      wall.set_color(0, i, 2);
-      wall.set_color(0, size - i, 3);
-    }
+    wall.set_color(0, 7, 2)
+    wall.set_color(0, 8, 0)
 
     // Einfaerben aller unteren Zeilen.
     // Wie oben koennen wir mit wall.set_color(...) die Farbe eines Feldes setzen.
