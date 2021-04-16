@@ -56,7 +56,7 @@ class Canvas {
 
     if (this.wall.queue.length != 0) {
       this.wall.work();
-      window.requestAnimationFrame(this.draw.bind(this));
+      window.setTimeout(this.draw.bind(this), this.wall.delay);
     }
   }
 }

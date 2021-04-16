@@ -33,11 +33,11 @@ function compute_color(left, right) {
 window.addEventListener("load", () => {
   // 'size' speichert die Groesse des Spielfeldes, genauer die Anzahl der Felder
   // in der ersten Reihe.
-  const size = 4;
+  const size = 128;
 
   // Die Anzahl der Millisekunden, die es dauert, um eine Farbe in ein Feld zu
   // setzen.
-  const delay = 17;
+  const delay = 1000;
 
   // Legt das Spielfeld an.
   // Der erste Parameter ist die Groesse der ersten Zeile, der zweite die Liste
@@ -79,55 +79,27 @@ window.addEventListener("load", () => {
     // wall.set_color(1, 2, 0)
     //-------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Einfaerben der ersten Zeile.
     // Hier setzen wir die erste Zeile mit zufaelligen Farben.
     //-------------------------------
-    // for (let i = 0; i < size; ++i) {
-    //  wall.set_color(0, i, Math.floor(Math.random() * 3));
-    //}
+    for (let i = 0; i < size; ++i) {
+     wall.set_color(0, i, Math.floor(Math.random() * 3));
+    }
     //-------------------------------
- 
+
     // Einfaerben aller unteren Zeilen.
     // Wie oben koennen wir mit wall.set_color(...) die Farbe eines Feldes setzen.
     // Dafuer koennen wir mit wall.get_color(i, j) die Farbe in der i-ten Zeile
     // und j-ten Spalte abfragen. Als Ergebnis bekommen wir wieder nicht direkt
     // die Farbe, sondern nur die Position in der Farbliste.
     //-------------------------------
-    // for (let i = 1; i < size; ++i) {
-    //  for (let j = 0; j + i < size; ++j) {
-    //    const left = wall.get_color(i - 1, j);
-    //    const right = wall.get_color(i - 1, j + 1);
-    //    wall.set_color(i, j, compute_color(left, right));
-    //  }
-    //}
+    for (let i = 1; i < size; ++i) {
+      for (let j = 0; j + i < size; ++j) {
+        const left = wall.get_color(i - 1, j);
+        const right = wall.get_color(i - 1, j + 1);
+        wall.set_color(i, j, compute_color(left, right));
+      }
+    }
     //-------------------------------
 
     // Als letztes den Befehl zum Malen.

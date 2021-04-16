@@ -54,18 +54,19 @@ class Wall {
   }
 
   work() {
-    let counter = 1;
-    while (this.queue.length != 0) {
-      const front = this.queue.shift();
-      const now = Date.now();
-      if (now - this.last_operation >= counter * this.delay) {
-        this.displayed[front.row][front.column] = front.color;
-        counter++;
+    if (this.queue.length != 0) {
+      const current_date = Date.now();
+      let todo;
+      if (this.delay <= 0) {
+        todo = this.queue.length;
       } else {
-        this.last_operation = Date.now();
-        this.queue.unshift(front);
-        return;
+        todo = Math.ceil((current_date - this.last_operation) / this.delay);
       }
+      for (let i = 0; i < todo && this.queue.length != 0; ++i) {
+        const front = this.queue.shift();
+        this.displayed[front.row][front.column] = front.color;
+      }
+      this.last_operation = current_date;
     }
   }
 }
