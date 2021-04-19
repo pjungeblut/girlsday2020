@@ -33,11 +33,11 @@ function compute_color(left, right) {
 window.addEventListener("load", () => {
   // 'size' speichert die Groesse des Spielfeldes, genauer die Anzahl der Felder
   // in der ersten Reihe.
-  const size = 128;
+  const size = 32;
 
   // Die Anzahl der Millisekunden, die es dauert, um eine Farbe in ein Feld zu
   // setzen.
-  const delay = 1000;
+  const delay = 10;
 
   // Legt das Spielfeld an.
   // Der erste Parameter ist die Groesse der ersten Zeile, der zweite die Liste
