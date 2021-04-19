@@ -5,11 +5,12 @@
 // In dieser Datei muessen wir nichts veraendern.
 
 class Wall {
-  constructor(size, colors, inital_color, delay) {
+  constructor(size, colors, delay) {
     this.size = size;
-    this.colors = colors;
+    this.colors = colors.slice();
+    this.colors.push("white");
+    this.inital_color = this.colors.length - 1;
     this.delay = delay;
-    this.inital_color = inital_color;
 
     // 'bricks' enthaelt die echten Farben, 'displayed' enthaelt die
     // anzuzeigenden Farben.
@@ -32,12 +33,14 @@ class Wall {
   }
 
   init() {
+    this.queue = [];
     for (let row = 0; row < this.size; ++row) {
       for (let col = 0; col < this.size - row; ++col) {
         this.bricks[row][col] = this.inital_color;
         this.displayed[row][col] = this.inital_color;
       }
     }
+    this.last_operation = Date.now();
   }
 
   get_color(row, column) {

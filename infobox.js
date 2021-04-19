@@ -3,10 +3,9 @@
 // In dieser Datein muessen wir nichts veraendern.
 
 class InfoBox {
-  RADIUS = 10;
-
   constructor(info_n_id, info_delay_id, info_rules_id, size, delay, colors,
         compute_color) {
+    this.RADIUS = 10;
     this.display_size(info_n_id, size);
     this.display_delay(info_delay_id, delay);
     this.display_rules(info_rules_id, colors, compute_color);

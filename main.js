@@ -30,6 +30,13 @@ function compute_color(left, right) {
   return rules[left][right];
 }
 
+// Diese Funktion gibt uns eine zufaellige Farbe aus der Farbliste.
+// Auch hier wird nicht die Farbe selbst zurueckgegeben, sondern nur die
+// Position in der Liste colors.
+function random_color() {
+  return Math.floor(Math.random() * colors.length);
+}
+
 window.addEventListener("load", () => {
   // 'size' speichert die Groesse des Spielfeldes, genauer die Anzahl der Felder
   // in der ersten Reihe.
@@ -41,11 +48,9 @@ window.addEventListener("load", () => {
 
   // Legt das Spielfeld an.
   // Der erste Parameter ist die Groesse der ersten Zeile, der zweite die Liste
-  // von Farben und der dritte die initiale Farbe aller Felder.
-  // Der dritte Parameter ist dabei nicht die Farbe selbst, sondern die Position
-  // der Farbe in der Farbliste.
-  // Der vierte Parameter gibt an, wie lange ein Einfaerben benoetigt.
-  const wall = new Wall(size, colors, 0, delay);
+  // der Farben. Der dritte Parameter sagt, wie lange das Einfaerben von einem
+  // Feldes dauert.
+  const wall = new Wall(size, colors, delay);
 
   // Malt das Bild.
   // Fuer uns ist nur der zweite Parameter interessant, hier koennen wir die
@@ -65,25 +70,24 @@ window.addEventListener("load", () => {
   document.getElementById("start_button").addEventListener("click", () => {
     // Loesche alles, was noch vom letzten Klick in Arbeit sein koennte.
     // Hier muessen wir nichts aendern.
-    wall.queue = [];
     wall.init();
 
 
     // Einfaerben eines Steins.
     // Mit wall.set_color(i, j, c) koennen wir die Farbe vom Stein in der i-ten
     // Zeile und j-ten Spalte setzen.
-    // Die Farbe wird dabei wieder nicht direkt angegeben, sonder die Position in
-    // der Farbliste.
+    // Die Farbe wird dabei wieder nicht direkt angegeben, sonder stattdessen
+    // die Position in der Farbliste.
     //-------------------------------
-    // wall.set_color(0, 1, 2)
-    // wall.set_color(1, 2, 0)
+    // wall.set_color(0, 1, 2);
+    // wall.set_color(1, 2, 0);
     //-------------------------------
 
     // Einfaerben der ersten Zeile.
-    // Hier setzen wir die erste Zeile mit zufaelligen Farben.
+    // Hier setzen wir die oberste, also "nullte" Zeile mit zufaelligen Farben.
     //-------------------------------
-    for (let i = 0; i < size; ++i) {
-     wall.set_color(0, i, Math.floor(Math.random() * 3));
+    for (let i = 0; i < size; i = i + 1) {
+      wall.set_color(0, i, random_color());
     }
     //-------------------------------
 
@@ -91,10 +95,10 @@ window.addEventListener("load", () => {
     // Wie oben koennen wir mit wall.set_color(...) die Farbe eines Feldes setzen.
     // Dafuer koennen wir mit wall.get_color(i, j) die Farbe in der i-ten Zeile
     // und j-ten Spalte abfragen. Als Ergebnis bekommen wir wieder nicht direkt
-    // die Farbe, sondern nur die Position in der Farbliste.
+    // die Farbe, sondern nur eine Zahl: Die Position in der Farbliste.
     //-------------------------------
-    for (let i = 1; i < size; ++i) {
-      for (let j = 0; j + i < size; ++j) {
+    for (let i = 1; i < size; i = i + 1) {
+      for (let j = 0; j + i < size; j = j + 1) {
         const left = wall.get_color(i - 1, j);
         const right = wall.get_color(i - 1, j + 1);
         wall.set_color(i, j, compute_color(left, right));
@@ -103,7 +107,6 @@ window.addEventListener("load", () => {
     //-------------------------------
 
     // Als letztes den Befehl zum Malen.
-    wall.last_operation = Date.now();
     canvas.draw();
   });
 });

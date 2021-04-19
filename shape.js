@@ -11,7 +11,10 @@ class Shape {
 }
 
 class Rect extends Shape {
-  HW_RATIO = 0.5;
+  constructor(ctx) {
+    super(ctx);
+    this.HW_RATIO = 0.5;
+  }
 
   draw(x, y, dim, color) {
     this.ctx.fillStyle = color;
@@ -23,7 +26,10 @@ class Rect extends Shape {
 }
 
 class Square extends Shape {
-  HW_RATIO = 1;
+  constructor(ctx) {
+    super(ctx);
+    this.HW_RATIO = 1;
+  }
 
   draw(x, y, dim, color) {
     this.ctx.fillStyle = color;
@@ -35,7 +41,10 @@ class Square extends Shape {
 }
 
 class Hexagon extends Shape {
-  HW_RATIO = 3 / 4;
+  constructor(ctx) {
+    super(ctx);
+    this.HW_RATIO = 0.75;
+  }
 
   draw(x, y, dim, color) {
     const side = dim / 2;
@@ -56,7 +65,10 @@ class Hexagon extends Shape {
 }
 
 class Diamond extends Shape {
-  HW_RATIO = 1 / 2;
+  constructor(ctx) {
+    super(ctx);
+    this.HW_RATIO = 0.5;
+  }
 
   draw(x, y, dim, color) {
     const side = dim / 2;

@@ -3,9 +3,8 @@
 // In dieser Datei muessen wir nichts veraendern.
 
 class Canvas {
-  MARGIN = 20;
-
   constructor(id, shape_type, wall) {
+    this.MARGIN = 20;
     this.wall = wall;
 
     this.canvas = document.getElementById(id);
