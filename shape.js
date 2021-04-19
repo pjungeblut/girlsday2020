@@ -1,8 +1,8 @@
-// In dieser Datei steht der Quelltext zum Zeichnen der einzelnen Felder.
-// Wir haben verschiedene Formen zur Auswahl (siehe main.js), die jeweils anders
-// gemalt werden muessen.
+// Hier steht der Quelltext zum Zeichnen der einzelnen Felder.
+// Wir haben verschiedene Formen zur Auswahl,
+// die jeweils anders gemalt werden muessen.
 //
-// In dieser Datei muessen wir nichts veraendern.
+// Hier muessen wir nichts veraendern.
 
 class Shape {
   constructor(ctx) {

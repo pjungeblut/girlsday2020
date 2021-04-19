@@ -1,15 +1,17 @@
-// Diese Datei ist die einzige, in der wir Dinge veraendern muessen, um neue
-// Bilder zu erzeugen.
-// Alles, was wie diese Zeilen hinter zwei Schraegstrichen steht, sind sog.
+// Was wir hier sehen der Quelltext, eine Sprache in der wir Menschen einem
+// Computer sogenannte Befehle geben koennen.
+//
+// Alles, was wie diese Zeilen hinter zwei Schraegstrichen steht, sind
 // Kommentare. Der Computer ignoriert das, aber wir als Entwicklerinnen koennen
-// uns damit Notizen in den Quelltext schreiben.
-
+// uns damit Notizen in den Quelltext schreiben, um anderen das Verstaendnis zu
+// erleichtern.
 
 
 // In 'colors' werden die Farben gespeichert.
 //
 // Als Farben koennen die "meisten" englischen Farbnamen verwendet werden (und
-// noch viele mehr.) Eine vollstaendige Liste findet sich zum Beispiel hier:
+// noch viele mehr).
+// Eine vollstaendige Liste findet sich zum Beispiel hier:
 // https://developer.mozilla.org/de/docs/Web/CSS/Farben
 //
 // Um auf die i-te Farbe in der Liste zuzugreifen, schreiben wir: colors[i]
@@ -27,6 +29,9 @@ function compute_color(left, right) {
     [2, 1, 0],
     [1, 0, 2]
   ];
+
+  // Mit der Zeile unten greifen in der Tabelle oben auf Zeile "left" und
+  // Spalte "right" zu.
   return rules[left][right];
 }
 

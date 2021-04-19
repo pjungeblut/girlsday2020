@@ -1,6 +1,5 @@
-// In dieser Datei ist der Quelltext, um die Zeichenflaeche zu verwalten.
-//
-// In dieser Datei muessen wir nichts veraendern.
+// Hier wird die Zeichenflaeche verwaltet.
+// Hier muessen wir nichts veraendern.
 
 class Canvas {
   constructor(id, shape_type, wall) {

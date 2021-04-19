@@ -1,6 +1,5 @@
-// Diese Datei verwaltet die kleine Infobox in der rechten unteren Ecke.
-//
-// In dieser Datein muessen wir nichts veraendern.
+// Hier wird die kleine Infobox in der rechten unteren Ecke verwaltet.
+// Hier muessen wir nichts veraendern.
 
 class InfoBox {
   constructor(info_n_id, info_delay_id, info_rules_id, size, delay, colors,
